@@ -24,8 +24,13 @@ public final class SentinelMain {
                 jedis.auth(REDIS_PASSWORD);
                 jedis.select(REDIS_DB_INDEX);
 
-                jedis.set("key1", "some value - 1");
+                for(int i =0; i < 3; ++i) {
+                    jedis.set( String.format("key%d", i), String.format("value-%d", i));
+                }
+
+                System.out.println(jedis.get("key0"));
                 System.out.println(jedis.get("key1"));
+                System.out.println(jedis.get("key2"));
             }
         }
 
