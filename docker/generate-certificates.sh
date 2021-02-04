@@ -10,7 +10,7 @@ openssl req \
     -key certs/ca.key \
     -days 3650 \
     -subj '/O=Oracle/CN=Certificate Authority' \
-    -out certs/ca.crt
+    -out certs/ca.pem
 
 # Generate RSA private key 'redis.key'
 openssl genrsa -out certs/redis.key 2048
@@ -23,12 +23,12 @@ openssl req \
     -subj '/O=Oracle/CN=Server' | \
     openssl x509 \
         -req -sha256 \
-        -CA certs/ca.crt \
+        -CA certs/ca.pem \
         -CAkey certs/ca.key \
         -CAserial certs/ca.txt \
         -CAcreateserial \
         -days 365 \
-        -out certs/redis.crt
+        -out certs/redis.pem
 
 # Generate Diffie-Hellman
 openssl dhparam -out certs/redis.dh 2048
