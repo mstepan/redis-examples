@@ -15,7 +15,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Set;
 
-public final class TlsSentinelMain {
+public final class PlainSentinelTlsToMasterMain {
 
     private static final int REDIS_DB_INDEX = 0;
 
@@ -26,6 +26,10 @@ public final class TlsSentinelMain {
 
     private static final String SENTINEL_MASTER_NAME = "mymaster";
 
+    /**
+     * Connect to Sentinel using plain port without TLS (but with password).
+     * Connect to master using TLS.
+     */
     public static void main(String[] args) throws Exception {
 
         System.setProperty("javax.net.ssl.trustStore",
