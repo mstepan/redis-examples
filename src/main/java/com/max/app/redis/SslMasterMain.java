@@ -9,50 +9,26 @@ public final class SslMasterMain {
     // identical for master & slaves
     private static final String REDIS_PASSWORD = "pazzword!";
 
-    enum Role {
-        MASTER("localhost", 6379),
-        SLAVE1("localhost", 6380),
-        SLAVE2("localhost", 6381);
-
-        private final String host;
-        private final int port;
-
-        Role(String host, int port) {
-            this.host = host;
-            this.port = port;
-        }
-    }
-
     public static void main(String[] args) throws Exception {
 
-        for (int i = 0; i < 10; ++i) {
-            write(Role.MASTER, "dss:uap:async:key" + i, "value-" + i);
-        }
+        System.setProperty("javax.net.ssl.trustStore",
+                           "/Users/mstepan/repo/redis-examples/docker/certs/truststore.jks");
+        System.setProperty("javax.net.ssl.trustStorePassword", "611191");
+//        System.setProperty("javax.net.ssl.trustStoreType", "PKCS12");
+//        System.setProperty("javax.net.debug", "all");
+//        System.setProperty("https.protocols", "TLSv1.2");
 
-        final String key = "dss:uap:async:key1";
-        System.out.printf("master value: %s%n", read(Role.MASTER, key));
-        System.out.printf("slave1 value: %s%n", read(Role.SLAVE1, key));
-        System.out.printf("slave2 value: %s%n", read(Role.SLAVE2, key));
+        try (Jedis jedis = new Jedis("rediss://localhost:6379")) {
+            jedis.auth(REDIS_PASSWORD);
+            jedis.select(REDIS_DB_INDEX);
+
+            jedis.set("key0", "some value 0");
+
+            System.out.printf("key0: %s%n", jedis.get("key0"));
+        }
 
         System.out.printf("RedisMain completed. java version: %s%n", System.getProperty("java.version"));
     }
 
-    private static void write(Role role, String key, String value) {
-
-        try (Jedis jedis = new Jedis(role.host, role.port)) {
-            jedis.auth(REDIS_PASSWORD);
-            jedis.select(REDIS_DB_INDEX);
-
-            jedis.set(key, value);
-        }
-    }
-
-    private static String read(Role role, String key) {
-        try (Jedis jedis = new Jedis(role.host, role.port)) {
-            jedis.auth(REDIS_PASSWORD);
-            jedis.select(REDIS_DB_INDEX);
-            return jedis.get(key);
-        }
-    }
 
 }
