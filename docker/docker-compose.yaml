@@ -10,12 +10,14 @@ services:
     volumes:
       - "./certs:/certs"
 
-#  redis-slave:
-#    image: "com.max.redis-slave:6.0"
-#    hostname: redis-slave
-#    ports:
-#      - '6380-6381:6379'
-#
+  redis-slave:
+    image: "com.max.redis-slave:6.0"
+    hostname: redis-slave
+    ports:
+      - '6380-6381:6379'
+    volumes:
+      - "./certs:/certs"
+
 #  redis-sentinel:
 #    image: "com.max.redis-sentinel:6.0"
 #    ports:
