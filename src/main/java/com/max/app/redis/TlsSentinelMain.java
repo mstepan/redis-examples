@@ -1,11 +1,10 @@
 package com.max.app.redis;
 
+import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.SslJedisSentinelPool;
+import redis.clients.jedis.JedisSentinelPool;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 import java.io.InputStream;
@@ -16,25 +15,42 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.util.Set;
 
-public final class SslSentinelMain {
+public final class TlsSentinelMain {
 
-    private static final String SENTINEL_MASTER_NAME = "dss-master";
+    private static final int REDIS_DB_INDEX = 0;
+
+    // identical for master & slaves
+    private static final String REDIS_PASSWORD = "pazzword!";
+
+    private static final String SENTINEL_PASSWORD = "sentinel-pazzword!";
+
+    private static final String SENTINEL_MASTER_NAME = "mymaster";
 
     public static void main(String[] args) throws Exception {
 
-        SSLSocketFactory sslFactory = createSslSocketFactory();
-        SSLParameters sslParameters = new SSLParameters();
-        HostnameVerifier hostnameVerifier = (hostname, session) -> true;
+        System.setProperty("javax.net.ssl.trustStore",
+                           "/Users/mstepan/repo/redis-examples/docker/certs/truststore.jks");
+        System.setProperty("javax.net.ssl.trustStorePassword", "611191");
+        System.setProperty("javax.net.ssl.trustStoreType", "JKS");
+        System.setProperty("https.protocols", "TLSv1.3");
 
-        try (SslJedisSentinelPool pool = new SslJedisSentinelPool(SENTINEL_MASTER_NAME,
-                                                                  Set.of("0.0.0.0:26379"),
-                                                                  sslFactory, sslParameters, hostnameVerifier)) {
+        try (JedisSentinelPool pool = new JedisSentinelPool(SENTINEL_MASTER_NAME,
+                                                            Set.of("localhost:26000",
+                                                                   "localhost:26001",
+                                                                   "localhost:26002"))) {
 
-            try (Jedis jedis = pool.getResource()) {
-                jedis.select(0); //0 - stage, 1 - prod
+            HostAndPort masterHostAndPort = pool.getCurrentHostMaster();
+
+            System.out.printf("master host & port: %s:%d%n", masterHostAndPort.getHost(), masterHostAndPort.getPort());
+
+            try (Jedis jedis = new Jedis(masterHostAndPort.getHost(), masterHostAndPort.getPort(), true)) {
+                jedis.auth(REDIS_PASSWORD);
+                jedis.select(REDIS_DB_INDEX);
+
+                jedis.set("key0", "some value for key 0");
+
                 System.out.printf("key0: %s%n", jedis.get("key0"));
             }
-
         }
 
         System.out.printf("RedisMain completed. java version: %s%n", System.getProperty("java.version"));

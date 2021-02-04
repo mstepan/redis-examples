@@ -18,7 +18,10 @@ services:
     volumes:
       - "./certs:/certs"
 
-#  redis-sentinel:
-#    image: "com.max.redis-sentinel:6.0"
-#    ports:
-#      - '26379-26381:26379'
+  redis-sentinel:
+    image: "com.max.redis-sentinel:6.0"
+    ports:
+      - '26379-26381:26379' # TLS port
+      - '26000-26002:26000' # regular port
+    volumes:
+      - "./certs:/certs"
