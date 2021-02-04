@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisException;
 
+import javax.net.SocketFactory;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLParameters;
 
@@ -38,22 +39,17 @@ public class SslJedisSentinelPool extends JedisPoolAbstract {
     private final Object initPoolLock;
 
     //TODO:
-    private SSLSocketFactory sslSocketFactory;
-    private SSLParameters sslParameters;
-    private HostnameVerifier hostnameVerifier;
+    private SSLSocketFactory sslSocketFactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
 
-    public SslJedisSentinelPool(String masterName, Set<String> sentinels, SSLSocketFactory sslSocketFactory,
-                                SSLParameters sslParameters, HostnameVerifier hostnameVerifier) {
+    public SslJedisSentinelPool(String masterName, Set<String> sentinels) {
         this(masterName, sentinels, new GenericObjectPoolConfig(), 20000, 20000, 20000, null, null,
-             Protocol.DEFAULT_DATABASE, null, 20000, 20000, null, null, null, sslSocketFactory, sslParameters, hostnameVerifier);
+             Protocol.DEFAULT_DATABASE, null, 20000, 20000, null, null, null);
     }
 
     public SslJedisSentinelPool(String masterName, Set<String> sentinels, GenericObjectPoolConfig poolConfig,
                                 int connectionTimeout, int soTimeout, int infiniteSoTimeout, String user, String password,
                                 int database, String clientName, int sentinelConnectionTimeout, int sentinelSoTimeout,
-                                String sentinelUser, String sentinelPassword, String sentinelClientName,
-                                SSLSocketFactory sslSocketFactory,
-                                SSLParameters sslParameters, HostnameVerifier hostnameVerifier) {
+                                String sentinelUser, String sentinelPassword, String sentinelClientName) {
         this.log = LoggerFactory.getLogger(this.getClass().getName());
         this.masterListeners = new HashSet<>();
         this.initPoolLock = new Object();
@@ -70,9 +66,6 @@ public class SslJedisSentinelPool extends JedisPoolAbstract {
         this.sentinelUser = sentinelUser;
         this.sentinelPassword = sentinelPassword;
         this.sentinelClientName = sentinelClientName;
-        this.sslSocketFactory = sslSocketFactory;
-        this.sslParameters = sslParameters;
-        this.hostnameVerifier = hostnameVerifier;
         HostAndPort master = this.initSentinels(sentinels, masterName);
         this.initPool(master);
     }
@@ -94,12 +87,12 @@ public class SslJedisSentinelPool extends JedisPoolAbstract {
                 this.currentHostMaster = master;
                 if (this.factory == null) {
 
-                    // TODO: add SSL to Jedis
+                    // TODO: use TLS for Jedis here
                     this.factory = new JedisFactory(master.getHost(), master.getPort(),
                                                     this.connectionTimeout, this.soTimeout,
                                                      this.password, this.database,
-                                                    this.clientName, true, this.sslSocketFactory, this.sslParameters,
-                                                    this.hostnameVerifier);
+                                                    this.clientName, true, this.sslSocketFactory, null,
+                                                    null);
                     this.initPool(this.poolConfig, this.factory);
                 } else {
                     this.factory.setHostAndPort(this.currentHostMaster);
@@ -128,9 +121,9 @@ public class SslJedisSentinelPool extends JedisPoolAbstract {
 
             try {
 
-                // TODO: add SSL to Jedis
+                // TODO: use TLS for Jedis here
                 jedis = new Jedis(hap.getHost(), hap.getPort(), this.sentinelConnectionTimeout, this.sentinelSoTimeout,
-                                  true, this.sslSocketFactory, this.sslParameters, this.hostnameVerifier);
+                                  true, this.sslSocketFactory, null, null);
 
                 if (this.sentinelUser != null) {
                     jedis.auth(this.sentinelUser, this.sentinelPassword);
@@ -250,7 +243,9 @@ public class SslJedisSentinelPool extends JedisPoolAbstract {
                         break;
                     }
 
-                    this.j = new Jedis(this.host, this.port, SslJedisSentinelPool.this.sentinelConnectionTimeout, SslJedisSentinelPool.this.sentinelSoTimeout);
+                    // TODO: use TLS for Jedis here
+                    this.j = new Jedis(this.host, this.port, SslJedisSentinelPool.this.sentinelConnectionTimeout,
+                                       SslJedisSentinelPool.this.sentinelSoTimeout, true);
                     if (SslJedisSentinelPool.this.sentinelUser != null) {
                         this.j.auth(SslJedisSentinelPool.this.sentinelUser, SslJedisSentinelPool.this.sentinelPassword);
                     } else if (SslJedisSentinelPool.this.sentinelPassword != null) {
