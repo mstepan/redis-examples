@@ -34,7 +34,7 @@ public final class TlsMasterSlaveMain {
 //        System.setProperty("javax.net.debug", "all");
         System.setProperty("https.protocols", "TLSv1.3");
 
-        writeValue(RedisInstance.MASTER, "key1", "value for 1");
+        writeValue(RedisInstance.MASTER, "key1", "value for key1 is " + RAND.nextInt(100));
 
         System.out.printf("master value: %s%n", readValue(RedisInstance.MASTER, "key1"));
         System.out.printf("slave1 value: %s%n", readValue(RedisInstance.SLAVE1, "key1"));
