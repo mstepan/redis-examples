@@ -9,6 +9,9 @@ public final class TlsSentinelMain {
 
     private static final int REDIS_DB_INDEX = 0;
 
+    private static final String SENTINEL_USERNAME = "max";
+    private static final String SENTINEL_PASSWORD = "sentinel-pazzword!";
+
     // identical for master & slaves
     private static final String REDIS_PASSWORD = "pazzword!";
 
