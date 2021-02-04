@@ -37,7 +37,8 @@ public final class TlsSentinelMain {
         try (JedisSentinelPool pool = new JedisSentinelPool(SENTINEL_MASTER_NAME,
                                                             Set.of("localhost:26000",
                                                                    "localhost:26001",
-                                                                   "localhost:26002"))) {
+                                                                   "localhost:26002"),
+                                                            SENTINEL_PASSWORD)) {
 
             HostAndPort masterHostAndPort = pool.getCurrentHostMaster();
 
