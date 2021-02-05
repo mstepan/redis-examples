@@ -28,7 +28,7 @@ public final class TlsMasterSlaveMain {
     public static void main(String[] args) throws Exception {
 
         System.setProperty("javax.net.ssl.trustStore",
-                           "/Users/mstepan/repo/redis-examples/docker/certs/truststore.jks");
+                           "/Users/mstepan/repo/redis-examples/docker/certs-client/truststore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "611191");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
 //        System.setProperty("javax.net.debug", "all");

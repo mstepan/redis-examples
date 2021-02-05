@@ -22,14 +22,18 @@ public final class TlsSentinelMain {
      */
     public static void main(String[] args) throws Exception {
 
+//        System.setProperty("javax.net.ssl.keyStore",
+//                           "/Users/mstepan/repo/redis-examples/docker/certs/keystore.jks");
+//        System.setProperty("javax.net.ssl.keyStorePassword", "611191");
+//        System.setProperty("javax.net.ssl.keyStoreType", "JKS");
+
+
         System.setProperty("javax.net.ssl.trustStore",
-                           "/Users/mstepan/repo/redis-examples/docker/certs/truststore.jks");
+                           "/Users/mstepan/repo/redis-examples/docker/certs-client/truststore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "611191");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
+
         System.setProperty("https.protocols", "TLSv1.3");
-        /*
-          openssl x509 --in redis.pem -text --noout
-         */
 
         try (SslJedisSentinelPool pool = new SslJedisSentinelPool(SENTINEL_MASTER_NAME,
                                                                   Set.of("localhost:26379",

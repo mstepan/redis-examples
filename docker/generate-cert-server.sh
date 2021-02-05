@@ -36,7 +36,7 @@ openssl req \
   -subj '/CN=redis-server' \
   -out $CERTS_FOLDER/redis.csr
 
-# Create signed by CA certificate from CSR for redis
+# Create signed by CA certificate from CSR for redis (ca -> redis)
 openssl x509 \
   -req \
   -in $CERTS_FOLDER/redis.csr \
@@ -48,32 +48,3 @@ openssl x509 \
 
 # Generate Diffie-Hellman
 openssl dhparam -out $CERTS_FOLDER/redis.dh 2048
-
-#------------------------------------------------
-# Client certificate
-#------------------------------------------------
-export CERTS_CLIENT_FOLDER=certs-client
-rm -rf $CERTS_CLIENT_FOLDER
-mkdir -p $CERTS_CLIENT_FOLDER
-
-# RSA private key for client
-openssl genrsa \
-  -out $CERTS_CLIENT_FOLDER/client.key 2048
-
-# Certificate signing request for client
-openssl req \
-  -new \
-  -key $CERTS_CLIENT_FOLDER/client.key \
-  -subj '/CN=my-client' \
-  -out $CERTS_CLIENT_FOLDER/client.csr
-
-# Signed by CA client certificate
-openssl x509 \
-  -req \
-  -in $CERTS_CLIENT_FOLDER/client.csr \
-  -CA $CERTS_FOLDER/ca.pem \
-  -CAkey $CERTS_FOLDER/ca.key \
-  -CAcreateserial \
-  -days 365 \
-  -out $CERTS_CLIENT_FOLDER/client.pem
-
