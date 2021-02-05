@@ -27,6 +27,9 @@ public final class TlsSentinelMain {
         System.setProperty("javax.net.ssl.trustStorePassword", "611191");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
         System.setProperty("https.protocols", "TLSv1.3");
+        /*
+          openssl x509 --in redis.pem -text --noout
+         */
 
         try (SslJedisSentinelPool pool = new SslJedisSentinelPool(SENTINEL_MASTER_NAME,
                                                                   Set.of("localhost:26379",
