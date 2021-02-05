@@ -1,34 +1,42 @@
 #!/usr/bin/env bash
+
+# link https://codeburst.io/mutual-tls-authentication-mtls-de-mystified-11fa2a52e9cf
+
+export CERTS_FOLDER=certs
+
+rm -rf certs
 mkdir -p certs
 
-# Generate RSA private key 'ca.key'
-openssl genrsa -out certs/ca.key 4096
-
-# Generate certificate with public key 'ca.crt'
+# Create self-signed certificate as CA
 openssl req \
-    -x509 -new -nodes -sha256 \
-    -key certs/ca.key \
-    -days 3650 \
-    -subj '/O=Oracle/CN=Certificate Authority' \
-    -out certs/ca.pem
+  -new \
+  -x509 \
+  -nodes \
+  -days 3650 \
+  -subj '/CN=my-ca' \
+  -keyout $CERTS_FOLDER/ca.key \
+  -out $CERTS_FOLDER/ca.pem
 
-# Generate RSA private key 'redis.key'
-openssl genrsa -out certs/redis.key 2048
+# Generate RSA private key for redis
+openssl genrsa \
+  -out $CERTS_FOLDER/redis.key 2048
 
-# Generate 'redis.crt' certificate using 'ca.key' as CA signer key
-# so we have the following certificates chain: redis --> ca
+# Create certificate signed request (CSR)
 openssl req \
-    -new -sha256 \
-    -key certs/redis.key \
-    -subj '/O=Oracle/CN=Server' | \
-    openssl x509 \
-        -req -sha256 \
-        -CA certs/ca.pem \
-        -CAkey certs/ca.key \
-        -CAserial certs/ca.txt \
-        -CAcreateserial \
-        -days 365 \
-        -out certs/redis.pem
+  -new \
+  -key $CERTS_FOLDER/redis.key \
+  -subj '/CN=localhost' \
+  -out $CERTS_FOLDER/redis.csr
+
+# Create signed by CA certificate from CSR for redis
+openssl x509 \
+  -req \
+  -in $CERTS_FOLDER/redis.csr \
+  -CA $CERTS_FOLDER/ca.pem \
+  -CAkey $CERTS_FOLDER/ca.key \
+  -CAcreateserial \
+  -days 365 \
+  -out $CERTS_FOLDER/redis.pem
 
 # Generate Diffie-Hellman
-openssl dhparam -out certs/redis.dh 2048
+openssl dhparam -out $CERTS_FOLDER/redis.dh 2048
