@@ -4,8 +4,11 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.SslJedisSentinelPool;
 
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class TlsSentinelMain {
+
+    private static final ThreadLocalRandom RAND = ThreadLocalRandom.current();
 
     private static final int REDIS_DB_INDEX = 0;
 
@@ -17,19 +20,20 @@ public final class TlsSentinelMain {
 
     private static final String SENTINEL_MASTER_NAME = "mymaster";
 
+    private static final String CLIENT_CERTS_FOLDER = "/Users/mstepan/repo/redis-examples/docker/certs-client/";
+
     /**
      * Connect to Sentinel using mutual TLS.
      */
     public static void main(String[] args) throws Exception {
 
         System.setProperty("javax.net.ssl.keyStore",
-                           "/Users/mstepan/repo/redis-examples/docker/certs-client/keystore.jks");
+                           CLIENT_CERTS_FOLDER + "keystore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "611191");
         System.setProperty("javax.net.ssl.keyStoreType", "JKS");
 
-
         System.setProperty("javax.net.ssl.trustStore",
-                           "/Users/mstepan/repo/redis-examples/docker/certs-client/truststore.jks");
+                           CLIENT_CERTS_FOLDER  + "truststore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "611191");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
 
@@ -44,7 +48,7 @@ public final class TlsSentinelMain {
                 jedis.auth(REDIS_PASSWORD);
                 jedis.select(REDIS_DB_INDEX);
 
-                jedis.set("key0", "some value for key 0");
+                jedis.set("key0", "value " + RAND.nextInt(100));
 
                 System.out.printf("key0: %s%n", jedis.get("key0"));
             }

@@ -32,6 +32,7 @@ openssl x509 \
 
 #------------------------------------------------
 # JKS java part
+# https://stackoverflow.com/questions/2685512/can-a-java-key-store-import-a-key-pair-generated-by-openssl
 #------------------------------------------------
 
 rm -rf $CERTS_CLIENT_FOLDER/keystore.jks
