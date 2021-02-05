@@ -34,8 +34,23 @@ openssl x509 \
 # JKS java part
 #------------------------------------------------
 
-rm -rf $CERTS_CLIENT_FOLDER/truststore.jks
+rm -rf $CERTS_CLIENT_FOLDER/keystore.jks
 
-# Add CA certificate to truststore
+# Convert to pkcs12 format
+openssl pkcs12 -export \
+  -in $CERTS_CLIENT_FOLDER/client.pem \
+  -inkey $CERTS_CLIENT_FOLDER/client.key > $CERTS_CLIENT_FOLDER/client.p12
+
+# Import client certificate to JKS keystore
+keytool -importkeystore -srckeystore $CERTS_CLIENT_FOLDER/client.p12 \
+  -destkeystore $CERTS_CLIENT_FOLDER/keystore.jks \
+  -srcstoretype pkcs12
+
+# Add redis certificate to JKS truststore
 keytool -import -v -trustcacerts -alias ca -file $CERTS_FOLDER/redis.pem -keystore $CERTS_CLIENT_FOLDER/truststore.jks
 
+# List JSK keystore entries
+#keytool -list -v -keystore $CERTS_CLIENT_FOLDER/keystore.jks
+
+# List JSK truststore entries
+#keytool -list -v -keystore $CERTS_CLIENT_FOLDER/truststore.jks

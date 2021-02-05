@@ -18,14 +18,14 @@ public final class TlsSentinelMain {
     private static final String SENTINEL_MASTER_NAME = "mymaster";
 
     /**
-     * Connect to Sentinel using TLS.
+     * Connect to Sentinel using mutual TLS.
      */
     public static void main(String[] args) throws Exception {
 
-//        System.setProperty("javax.net.ssl.keyStore",
-//                           "/Users/mstepan/repo/redis-examples/docker/certs/keystore.jks");
-//        System.setProperty("javax.net.ssl.keyStorePassword", "611191");
-//        System.setProperty("javax.net.ssl.keyStoreType", "JKS");
+        System.setProperty("javax.net.ssl.keyStore",
+                           "/Users/mstepan/repo/redis-examples/docker/certs-client/keystore.jks");
+        System.setProperty("javax.net.ssl.keyStorePassword", "611191");
+        System.setProperty("javax.net.ssl.keyStoreType", "JKS");
 
 
         System.setProperty("javax.net.ssl.trustStore",
