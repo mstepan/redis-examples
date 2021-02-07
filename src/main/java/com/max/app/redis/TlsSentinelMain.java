@@ -37,7 +37,8 @@ public final class TlsSentinelMain {
         System.setProperty("javax.net.ssl.trustStorePassword", "611191");
         System.setProperty("javax.net.ssl.trustStoreType", "JKS");
 
-        System.setProperty("https.protocols", "TLSv1.3");
+//        System.setProperty("https.protocols", "TLSv1.3");
+//        System.setProperty("javax.net.debug", "all");
 
         try (SslJedisSentinelPool pool = new SslJedisSentinelPool(SENTINEL_MASTER_NAME,
                                                                   Set.of("localhost:26379",

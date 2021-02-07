@@ -1,0 +1,143 @@
+"ClientHello": {
+  "client version"      : "TLSv1.2",
+  "random"              : "6A E4 78 8C 04 03 E7 88 69 F2 EE 54 65 B4 4C 02 2A 32 8D FB 23 79 D4 5C DE F0 F6 E3 50 6F 54 CD",
+  "session id"          : "8B E6 12 92 AD 57 1D 25 4D BB 37 B6 24 84 E4 C9 7C C9 D7 2C 63 86 6E 39 DD 56 FE 51 E7 FE B8 CC",
+  "cipher suites"       : "[TLS_AES_256_GCM_SHA384(0x1302), TLS_AES_128_GCM_SHA256(0x1301), TLS_CHACHA20_POLY1305_SHA256(0x1303), TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384(0xC02C), TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256(0xC02B), TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256(0xCCA9), TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384(0xC030), TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256(0xCCA8), TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256(0xC02F), TLS_DHE_RSA_WITH_AES_256_GCM_SHA384(0x009F), TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256(0xCCAA), TLS_DHE_DSS_WITH_AES_256_GCM_SHA384(0x00A3), TLS_DHE_RSA_WITH_AES_128_GCM_SHA256(0x009E), TLS_DHE_DSS_WITH_AES_128_GCM_SHA256(0x00A2), TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384(0xC024), TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384(0xC028), TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256(0xC023), TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256(0xC027), TLS_DHE_RSA_WITH_AES_256_CBC_SHA256(0x006B), TLS_DHE_DSS_WITH_AES_256_CBC_SHA256(0x006A), TLS_DHE_RSA_WITH_AES_128_CBC_SHA256(0x0067), TLS_DHE_DSS_WITH_AES_128_CBC_SHA256(0x0040), TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384(0xC02E), TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384(0xC032), TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256(0xC02D), TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256(0xC031), TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384(0xC026), TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384(0xC02A), TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256(0xC025), TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256(0xC029), TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA(0xC00A), TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA(0xC014), TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA(0xC009), TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA(0xC013), TLS_DHE_RSA_WITH_AES_256_CBC_SHA(0x0039), TLS_DHE_DSS_WITH_AES_256_CBC_SHA(0x0038), TLS_DHE_RSA_WITH_AES_128_CBC_SHA(0x0033), TLS_DHE_DSS_WITH_AES_128_CBC_SHA(0x0032), TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA(0xC005), TLS_ECDH_RSA_WITH_AES_256_CBC_SHA(0xC00F), TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA(0xC004), TLS_ECDH_RSA_WITH_AES_128_CBC_SHA(0xC00E), TLS_RSA_WITH_AES_256_GCM_SHA384(0x009D), TLS_RSA_WITH_AES_128_GCM_SHA256(0x009C), TLS_RSA_WITH_AES_256_CBC_SHA256(0x003D), TLS_RSA_WITH_AES_128_CBC_SHA256(0x003C), TLS_RSA_WITH_AES_256_CBC_SHA(0x0035), TLS_RSA_WITH_AES_128_CBC_SHA(0x002F), TLS_EMPTY_RENEGOTIATION_INFO_SCSV(0x00FF)]",
+  "compression methods" : "00",
+  "extensions"          : [
+    "status_request (5)": {
+      "certificate status type": ocsp
+      "OCSP status request": {
+        "responder_id": <empty>
+        "request extensions": {
+          <empty>
+        }
+      }
+    },
+    "supported_groups (10)": {
+      "versions": [x25519, secp256r1, secp384r1, secp521r1, x448, ffdhe2048, ffdhe3072, ffdhe4096, ffdhe6144, ffdhe8192]
+    },
+    "ec_point_formats (11)": {
+      "formats": [uncompressed]
+    },
+    "signature_algorithms (13)": {
+      "signature schemes": [ecdsa_secp256r1_sha256, ecdsa_secp384r1_sha384, ecdsa_secp521r1_sha512, rsa_pss_rsae_sha256, rsa_pss_rsae_sha384, rsa_pss_rsae_sha512, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, rsa_pkcs1_sha256, rsa_pkcs1_sha384, rsa_pkcs1_sha512, dsa_sha256, ecdsa_sha224, rsa_sha224, dsa_sha224, ecdsa_sha1, rsa_pkcs1_sha1, dsa_sha1]
+    },
+    "signature_algorithms_cert (50)": {
+      "signature schemes": [ecdsa_secp256r1_sha256, ecdsa_secp384r1_sha384, ecdsa_secp521r1_sha512, rsa_pss_rsae_sha256, rsa_pss_rsae_sha384, rsa_pss_rsae_sha512, rsa_pss_pss_sha256, rsa_pss_pss_sha384, rsa_pss_pss_sha512, rsa_pkcs1_sha256, rsa_pkcs1_sha384, rsa_pkcs1_sha512, dsa_sha256, ecdsa_sha224, rsa_sha224, dsa_sha224, ecdsa_sha1, rsa_pkcs1_sha1, dsa_sha1]
+    },
+    "status_request_v2 (17)": {
+      "cert status request": {
+        "certificate status type": ocsp_multi
+        "OCSP status request": {
+          "responder_id": <empty>
+          "request extensions": {
+            <empty>
+          }
+        }
+      }
+    },
+    "extended_master_secret (23)": {
+      <empty>
+    },
+    "session_ticket (35)": {
+      <empty>
+    },
+    "supported_versions (43)": {
+      "versions": [TLSv1.3, TLSv1.2, TLSv1.1, TLSv1]
+    },
+    "psk_key_exchange_modes (45)": {
+      "ke_modes": [psk_dhe_ke]
+    },
+    "key_share (51)": {
+      "client_shares": [
+        {
+          "named group": x25519
+          "key_exchange": {
+            0000: BB 9B 5F 5E 36 9D 29 EE   2C F3 3E BC D7 E3 10 2B  .._^6.).,.>....+
+            0010: A0 A8 17 48 C5 54 92 8F   29 45 70 20 CE CB 2F 5B  ...H.T..)Ep ../[
+          }
+        },
+      ]
+    }
+  ]
+}
+)
+
+"ServerHello": {
+  "server version"      : "TLSv1.2",
+  "random"              : "A3 72 3E 6B A0 7D CB 76 AC 26 78 3F 6F CD 48 07 0C C2 22 8C 2B EE BE B3 B5 51 DE 66 31 CC 44 B1",
+  "session id"          : "8B E6 12 92 AD 57 1D 25 4D BB 37 B6 24 84 E4 C9 7C C9 D7 2C 63 86 6E 39 DD 56 FE 51 E7 FE B8 CC",
+  "cipher suite"        : "TLS_AES_256_GCM_SHA384(0x1302)",
+  "compression methods" : "00",
+  "extensions"          : [
+    "supported_versions (43)": {
+      "selected version": [TLSv1.3]
+    },
+    "key_share (51)": {
+      "server_share": {
+        "named group": x25519
+        "key_exchange": {
+          0000: A3 0F F4 B3 B2 9C B3 56   D9 1D 6B 29 0D 32 39 3B  .......V..k).29;
+          0010: CA 70 C1 28 88 05 1A 64   8F B3 6C 15 72 C1 A9 44  .p.(...d..l.r..D
+        }
+      },
+    }
+  ]
+}
+
+
+)
+"Certificate": {
+  "certificate_request_context": "",
+  "certificate_list": [
+  {
+    "certificate" : {
+      "version"            : "v1",
+      "serial number"      : "00 A1 EF C9 E3 4A 99 05 D4",
+      "signature algorithm": "SHA1withRSA",
+      "issuer"             : "CN=my-ca",
+      "not before"         : "2021-02-07 15:42:22.000 EET",
+      "not  after"         : "2022-02-07 15:42:22.000 EET",
+      "subject"            : "CN=redis-server",
+      "subject public key" : "RSA"}
+    "extensions": {
+      <no extension>
+    }
+  },
+  {
+    "certificate" : {
+      "version"            : "v1",
+      "serial number"      : "00 E2 D7 D8 AD AA 68 E9 F0",
+      "signature algorithm": "SHA256withRSA",
+      "issuer"             : "CN=my-ca",
+      "not before"         : "2021-02-07 15:42:22.000 EET",
+      "not  after"         : "2031-02-05 15:42:22.000 EET",
+      "subject"            : "CN=my-ca",
+      "subject public key" : "RSA"}
+    "extensions": {
+      <no extension>
+    }
+  },
+]
+}
+)
+
+"Certificate": {
+  "certificate_request_context": "",
+  "certificate_list": [
+  {
+    "certificate" : {
+      "version"            : "v1",
+      "serial number"      : "00 A1 EF C9 E3 4A 99 05 E1",
+      "signature algorithm": "SHA1withRSA",
+      "issuer"             : "CN=my-ca",
+      "not before"         : "2021-02-07 15:56:17.000 EET",
+      "not  after"         : "2022-02-07 15:56:17.000 EET",
+      "subject"            : "CN=my-client",
+      "subject public key" : "RSA"}
+    "extensions": {
+      <no extension>
+    }
+  },
+]
