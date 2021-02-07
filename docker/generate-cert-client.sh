@@ -47,11 +47,11 @@ keytool -importkeystore -srckeystore $CERTS_CLIENT_FOLDER/client.p12 \
   -destkeystore $CERTS_CLIENT_FOLDER/keystore.jks \
   -srcstoretype pkcs12
 
-# Add redis certificate to JKS truststore
-keytool -import -v -trustcacerts -alias ca -file $CERTS_FOLDER/redis.pem -keystore $CERTS_CLIENT_FOLDER/truststore.jks
+# Add 'redis.pem' or 'ca.pem' certificate to JKS truststore
+keytool -import -v -trustcacerts -alias ca -file $CERTS_FOLDER/ca.pem -keystore $CERTS_CLIENT_FOLDER/truststore.jks
 
-# List JSK keystore entries
+# List JKS keystore entries
 #keytool -list -v -keystore $CERTS_CLIENT_FOLDER/keystore.jks
 
-# List JSK truststore entries
+# List JKS truststore entries
 #keytool -list -v -keystore $CERTS_CLIENT_FOLDER/truststore.jks
