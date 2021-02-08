@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-
-openssl x509 -in $1 -text -noout
+openssl x509 -showcerts -in $1 -text -noout

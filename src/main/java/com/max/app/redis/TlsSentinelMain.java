@@ -3,6 +3,8 @@ package com.max.app.redis;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.SslJedisSentinelPool;
 
+import javax.net.ssl.SSLContext;
+import java.security.cert.X509Certificate;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,6 +29,9 @@ public final class TlsSentinelMain {
      */
     public static void main(String[] args) throws Exception {
 
+        // TODO: add base64 encoded certificates programmatically
+        // https://gist.github.com/swankjesse/b83df127f43e3da40bc5
+
         System.setProperty("javax.net.ssl.keyStore",
                            CLIENT_CERTS_FOLDER + "keystore.jks");
         System.setProperty("javax.net.ssl.keyStorePassword", "611191");
@@ -44,7 +49,6 @@ public final class TlsSentinelMain {
                                                                   Set.of("localhost:26379",
                                                                          "localhost:26380",
                                                                          "localhost:26381"))) {
-
             try (Jedis jedis = pool.getResource()) {
                 jedis.auth(REDIS_PASSWORD);
                 jedis.select(REDIS_DB_INDEX);

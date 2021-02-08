@@ -38,7 +38,7 @@ public class SslJedisSentinelPool extends JedisPoolAbstract {
     private volatile HostAndPort currentHostMaster;
     private final Object initPoolLock;
 
-    //TODO:
+    //TODO: add custom SSL socket factory using constructor
     private SSLSocketFactory sslSocketFactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
 
     public SslJedisSentinelPool(String masterName, Set<String> sentinels) {
@@ -246,6 +246,7 @@ public class SslJedisSentinelPool extends JedisPoolAbstract {
                     // TODO: use TLS for Jedis here
                     this.j = new Jedis(this.host, this.port, SslJedisSentinelPool.this.sentinelConnectionTimeout,
                                        SslJedisSentinelPool.this.sentinelSoTimeout, true);
+
                     if (SslJedisSentinelPool.this.sentinelUser != null) {
                         this.j.auth(SslJedisSentinelPool.this.sentinelUser, SslJedisSentinelPool.this.sentinelPassword);
                     } else if (SslJedisSentinelPool.this.sentinelPassword != null) {
